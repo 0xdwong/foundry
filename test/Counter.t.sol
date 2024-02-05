@@ -21,4 +21,33 @@ contract CounterTest is Test {
         counter.setNumber(x);
         assertEq(counter.number(), x);
     }
+
+    function testSendEeh() public {
+        deal(address(1), 1000);
+        assertEq(address(1).balance, 1000);
+
+        // vm.prank(address(1));
+
+        // payable(address(2)).transfer(100);
+        // console.log("balance1", address(1).balance);
+        // console.log("balance2", address(2).balance);
+        // assertEq(address(1).balance, 900);
+
+        hoax(address(1), 1000);
+        payable(address(2)).transfer(100);
+        assertEq(address(1).balance, 900);
+        assertEq(address(2).balance, 100);
+    }
+
+    function testFuzz(uint256 x) public {
+        assertEq(x >= 0, true);
+
+        vm.assume(x > 2 ** 128);
+        assertEq(x <= 2 ** 128, false);
+
+        x = bound(x, 1, 100);
+        console.log("=====x=======:", x);
+        assertGe(x, 1);
+        assertLe(x, 100);
+    }
 }
