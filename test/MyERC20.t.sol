@@ -95,4 +95,34 @@ contract CounterTest is Test {
         myERC20.transfer(receiver, amount);
     }
     // transfer() cases end
+
+    // approve() cases start
+    function testApprove() public {
+        address sender = address(this);
+        address spender = address(1);
+        uint256 value = 10000;
+
+        // emit Transfer event
+        vm.expectEmit(true, true, true, true);
+        emit IERC20.Approval(sender, spender, value);
+
+        // call
+        myERC20.approve(spender, value);
+
+        uint256 allowance = myERC20.allowance(sender, spender);
+        assertEq(allowance,value);
+    }
+
+    function testApproveInvalidSpenderRevert() public {
+        address spender = address(0); // invalid
+        uint256 value = 10000;
+
+        vm.expectRevert(
+            abi.encodeWithSelector(IERC20Errors.ERC20InvalidSpender.selector, spender)
+        );
+
+        // call
+        myERC20.approve(spender, value);
+    }
+    // approve() cases end
 }
