@@ -13,39 +13,36 @@ contract CounterTest is Test {
         myERC20 = new MyERC20(1 ether);
     }
 
-    function test_name() public {
+    function testName() public {
         assertEq(myERC20.name(), "MyERC20Token");
     }
 
-    function test_symbol() public {
+    function testSymbol() public {
         assertEq(myERC20.symbol(), "MERC");
     }
 
-    function test_decimals() public {
+    function testDecimals() public {
         assertEq(myERC20.decimals(), 18);
     }
 
-    function test_totalSupply() public {
+    function testTotalSupply() public {
         assertEq(myERC20.totalSupply(), 1 ether);
     }
 
-    function test_balanceOf() public {
+    function testBalanceOf() public {
         address deployMsgSender = address(this);
         assertEq(myERC20.balanceOf(deployMsgSender), 1 ether);
     }
 
-    function test_transfer() public {
+    // test transfer()
+    function testTransfer() public {
         address from = address(this);
         address to = address(1);
-        uint256 amount = 0.1 ether;
-
-        vm.prank(from);
+        uint256 amount = 10000;
 
         vm.expectEmit(true, true, true, true);
         emit Transfer(from, to, amount);
 
         myERC20.transfer(to, amount);
-
-        vm.stopPrank();
     }
 }
