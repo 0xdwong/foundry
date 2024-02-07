@@ -120,7 +120,9 @@ contract ERC20Test is Test {
     }
     // approve() cases end
 
-    // transferFrom() cases start
+    /*
+    * transferFrom() cases
+    */
     function testTransferFrom() public {
         address from = address(this);
         address spender = address(2);
@@ -155,5 +157,23 @@ contract ERC20Test is Test {
         // check new allowance
         uint256 allowanceAfter = myERC20.allowance(from, spender);
         assertEq(allowance - value, allowanceAfter);
+    }
+
+    function testTransferFromInsufficientAllowanceRevert() public {
+        address owner = address(this);
+        address spender = address(1);
+        address receiver = address(2);
+        uint256 allowance = 10000;
+        uint256 value = allowance + 1;
+
+        // approve first
+        myERC20.approve(spender, allowance);
+
+        vm.expectRevert(
+            abi.encodeWithSelector(IERC20Errors.ERC20InsufficientAllowance.selector, spender, allowance, value)
+        );
+
+        vm.prank(spender);
+        myERC20.transferFrom(owner, receiver, value);
     }
 }
