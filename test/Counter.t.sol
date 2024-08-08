@@ -50,6 +50,4 @@ contract CounterTest is Test {
         assertGe(x, 1);
         assertLe(x, 100);
     }
-
-
 }
