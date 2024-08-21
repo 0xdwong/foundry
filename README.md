@@ -47,6 +47,11 @@ $ anvil
 $ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
 ```
 
+也可以把配置写到`.env`和`foundry.toml`文件
+```
+forge script --chain sepolia script/SelfDestructExample.s.sol:DeployScript --rpc-url  sepolia --broadcast --verify -vvvvv --etherscan-api-key sepolia
+```
+
 Cast
 
 ```shell
