@@ -10,52 +10,62 @@ Foundryup 是 Foundry 工具链安装程序
 
 
 ## 使用
+### forge
 
-Build
+- Build： `$ forge build`
 
-```shell
-$ forge build
+- 测试：`$ forge test`
+
+- 格式化：`forge fmt`
+
+- Gas Snapshots：`forge snapshot`
+
+- 验证合约
+
+    eg: 
+    ```
+    forge verify-contract \
+    <contract> src/xx.sol:xxx \
+    --chain sepolia \
+    --etherscan-api-key sepolia \
+    --rpc-url sepolia
+    ```
+
+
+- 部署
+
+    eg:
+    ```
+    forge script \
+    script/Counter.s.sol:CounterScript \
+    --rpc-url <your_rpc_url> \
+    --private-key <your_private_key>
+    ```
+
+    也可以把配置写到`.env`和`foundry.toml`文件  
+    ```
+    forge script \
+    script/SelfDestructExample.s.sol:DeployScript \
+    --chain sepolia \
+    --rpc-url  sepolia \
+    --broadcast --verify \
+    --etherscan-api-key sepolia \
+    -vvvvv
+    ```
+
+
+### Anvil
+启动本地节点：`anvil`
+
+
+### Cast
+与链上合约交互
+
+eg:
 ```
-
-测试
-
-```shell
-$ forge test
-```
-
-格式化
-
-```shell
-$ forge fmt
-```
-
-Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-Anvil
-
-```shell
-$ anvil
-```
-
-部署
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-也可以把配置写到`.env`和`foundry.toml`文件
-```
-forge script --chain sepolia script/SelfDestructExample.s.sol:DeployScript --rpc-url  sepolia --broadcast --verify -vvvvv --etherscan-api-key sepolia
-```
-
-Cast
-
-```shell
-$ cast <subcommand>
+cast call \
+<contract>  "owner()(address)"  \
+--rpc-url sepolia`
 ```
 
 
