@@ -39,17 +39,18 @@ Foundryup 是 Foundry 工具链安装程序
     forge script \
     script/Counter.s.sol:CounterScript \
     --rpc-url <your_rpc_url> \
-    --private-key <your_private_key>
+    --private-key <your_private_key>\
+    --broadcast \
+    -vvvvv
     ```
 
     也可以把配置写到`.env`和`foundry.toml`文件  
     ```
     forge script \
-    script/SelfDestructExample.s.sol:DeployScript \
-    --chain sepolia \
-    --rpc-url  sepolia \
-    --broadcast --verify \
-    --etherscan-api-key sepolia \
+    script/SelfDestruct.s.sol:DeployScript \
+    --rpc-url sepolia \
+    --verify --etherscan-api-key sepolia \
+    --broadcast \
     -vvvvv
     ```
 
@@ -65,7 +66,7 @@ eg:
 ```
 cast call \
 <contract>  "owner()(address)"  \
---rpc-url sepolia`
+--rpc-url sepolia
 ```
 
 
